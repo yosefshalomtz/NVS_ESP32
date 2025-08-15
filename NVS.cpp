@@ -1,7 +1,7 @@
 #include "NVS.hpp"
 
 
-NVS::NVS()
+void NVS::initialize()
 {
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
@@ -10,6 +10,10 @@ NVS::NVS()
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
+}
+
+NVS::NVS()
+{
     ESP_ERROR_CHECK(nvs_open("storage", NVS_READWRITE, &handle));
     ESP_LOGI("NVS", "NVS initialized successfully.");
 }

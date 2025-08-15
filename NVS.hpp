@@ -5,6 +5,11 @@
 #include "nvs.h"
 #include "esp_log.h"
 
+/**
+ * @brief NVS (Non-Volatile Storage) class for managing key-value pairs in ESP32's NVS.
+ * note: call NVS::initialize() before using this class to ensure NVS is initialized.
+ */
+
 class NVS
 {
 private:
@@ -13,12 +18,15 @@ private:
     ~NVS();
 
 public:
+    static void initialize();
     static NVS &getInstance();
 
     void setInt32(const std::string &key, int32_t value);
     int32_t getInt32(const std::string &key);
+
     void eraseKey(const std::string &key);
     void eraseAll();
+
     bool keyExists(const std::string &key);
     int32_t operator[](const std::string &key);
     NVS(const NVS &) = delete;
