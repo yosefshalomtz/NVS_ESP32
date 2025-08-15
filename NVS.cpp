@@ -11,13 +11,13 @@ NVS::NVS()
     }
     ESP_ERROR_CHECK(ret);
     ESP_ERROR_CHECK(nvs_open("storage", NVS_READWRITE, &handle));
-    std::cout << "NVS::NVS(): NVS initialized." << std::endl;
+    ESP_LOGI("NVS", "NVS initialized successfully.");
 }
 
 NVS::~NVS()
 {
     nvs_close(handle);
-    std::cout << "NVS::~NVS(): NVS closed." << std::endl;
+    ESP_LOGI("NVS", "NVS closed successfully.");
 }
 
 NVS& NVS::getInstance()
