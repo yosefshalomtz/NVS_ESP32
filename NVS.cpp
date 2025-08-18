@@ -75,7 +75,7 @@ bool NVS::keyExists(const std::string &key)
     return false;
 }
 
-std::vector<NVS_entry_info> getAllEntriesInfo() {
+std::vector<NVS_entry_info> NVS::getAllEntriesInfo() {
     std::vector<NVS_entry_info> entries;
     nvs_iterator_t it = nullptr;
     esp_err_t res = nvs_entry_find_in_handle(handle, NVS_TYPE_ANY, &it);
