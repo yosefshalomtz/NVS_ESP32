@@ -58,23 +58,19 @@ void NVS::eraseAll()
 bool NVS::keyExists(const std::string &key)
 {
     nvs_iterator_t it = nullptr;
-    esp_err_t err = nvs_entry_find("nvs", nullptr, NVS_TYPE_ANY, &it); 
-    if (err != ESP_OK) {
-        return false;
-    }
+    esp_err_t res = nvs_entry_find_in_handle(handle, NVS_TYPE_ANY, &it);
 
-    while (it != nullptr) {
+    while (res == ESP_OK) {
         nvs_entry_info_t info;
-        nvs_entry_info(it, &info);
-
-        if (key == info.key) {
-            nvs_release_iterator(it);
-            return true;
+        if (nvs_entry_info(it, &info) == ESP_OK) {
+            if (key == info.key) {
+                nvs_release_iterator(it);
+                return true;
+            }
         }
-
-        it = nvs_entry_next(&it);
+        res = nvs_entry_next(&it);
     }
-
+    nvs_release_iterator(it);
     return false;
 }
 
