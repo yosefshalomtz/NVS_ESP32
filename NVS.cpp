@@ -14,6 +14,7 @@ void NVS::initialize()
 
 NVS::NVS()
 {
+    initialize();
     ESP_ERROR_CHECK(nvs_open("storage", NVS_READWRITE, &handle));
     ESP_LOGI("NVS", "NVS initialized successfully.");
 }
