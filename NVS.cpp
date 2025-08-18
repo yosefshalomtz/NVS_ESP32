@@ -75,6 +75,22 @@ bool NVS::keyExists(const std::string &key)
     return false;
 }
 
+std::vector<NVS_entry_info> getAllEntriesInfo() {
+    std::vector<NVS_entry_info> entries;
+    nvs_iterator_t it = nullptr;
+    esp_err_t res = nvs_entry_find_in_handle(handle, NVS_TYPE_ANY, &it);
+
+    while (res == ESP_OK) {
+        nvs_entry_info_t info;
+        if (nvs_entry_info(it, &info) == ESP_OK) {
+            entries.push_back({info.key, info.type});
+        }
+        res = nvs_entry_next(&it);
+    }
+    nvs_release_iterator(it);
+    return entries;
+}
+
 int32_t NVS::operator[](const std::string &key)
 {
     return getInt32(key);
